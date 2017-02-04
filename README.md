@@ -127,6 +127,10 @@ var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
 **Example On core PHP function**
 
 ```php
+include 'vendor/autoload.php'; // may already handled by your framework
+
+use function IsDeprecated\isDeprecated;
+
 //on php 7.0
 var_dump(isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]));  // false
 
