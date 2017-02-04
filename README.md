@@ -46,7 +46,7 @@ isDeprecated(string $function, array $parameters = [], $object = null): bool
 **Example On independent function level**
 
 ```php
-include 'vendor/autoload.php'; // may already handled by your framework
+include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecated;
 
@@ -84,7 +84,7 @@ var_dump(isDeprecated('foo2notdeprecated', [1, 2]));  // false
 **Example On function inside object level**
 
 ```php
-include 'vendor/autoload.php'; // may already handled by your framework
+include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecated;
 
@@ -127,7 +127,7 @@ var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
 **Example On core PHP function**
 
 ```php
-include 'vendor/autoload.php'; // may already handled by your framework
+include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecated;
 
