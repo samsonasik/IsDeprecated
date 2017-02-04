@@ -1,2 +1,5 @@
-*
-!.gitignore
+composer.lock
+vendor
+.php_cs.cache
+coverage.json
+coverage/
