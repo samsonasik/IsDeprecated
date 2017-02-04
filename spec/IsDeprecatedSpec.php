@@ -12,19 +12,42 @@ describe('IsDeprecated', function () {
 
             beforeAll(function () {
                 include __DIR__ . '/Fixture/deprecatedfunction.php';
+                include __DIR__ . '/Fixture/not-deprecatedfunction.php';
             });
 
-            it('deprecated on without parameters', function () {
+            context('deprecated' , function () {
 
-                $actual = isDeprecated('foo');
-                expect($actual)->toBe(true);
+                it('deprecated on without parameters', function () {
+
+                    $actual = isDeprecated('foo');
+                    expect($actual)->toBe(true);
+
+                });
+
+                it('deprecated on with parameters', function () {
+
+                    $actual = isDeprecated('foo2', [1, 2]);
+                    expect($actual)->toBe(true);
+
+                });
 
             });
 
-            it('deprecated on with parameters', function () {
+            context('not deprecated' , function () {
 
-                $actual = isDeprecated('foo2', [1, 2]);
-                expect($actual)->toBe(true);
+                it('not deprecated on without parameters', function () {
+
+                    $actual = isDeprecated('foonotdeprecated');
+                    expect($actual)->toBe(false);
+
+                });
+
+                it('not deprecated on with parameters', function () {
+
+                    $actual = isDeprecated('foo2notdeprecated', [1, 2]);
+                    expect($actual)->toBe(false);
+
+                });
 
             });
 
@@ -34,23 +57,46 @@ describe('IsDeprecated', function () {
 
             beforeAll(function () {
                 include __DIR__ . '/Fixture/deprecatedfunctioninsideclass.php';
+                include __DIR__ . '/Fixture/not-deprecatedfunctioninsideclass.php';
             });
 
-            it('deprecated on without parameters', function () {
+            context('deprecated' , function () {
 
-                $object = new \Aclass();
-                $actual = isDeprecated('foo', [], $object);
+                it('deprecated on without parameters', function () {
 
-                expect($actual)->toBe(true);
+                    $object = new \Aclass();
+                    $actual = isDeprecated('foo', [], $object);
+                    expect($actual)->toBe(true);
+
+                });
+
+                it('deprecated on with parameters', function () {
+
+                    $object = new \Aclass();
+                    $actual = isDeprecated('foo2', [1, 2], $object);
+                    expect($actual)->toBe(true);
+
+                });
 
             });
 
-            it('deprecated on with parameters', function () {
+            context('not deprecated' , function () {
 
-                $object = new \Aclass();
-                $actual = isDeprecated('foo2', [1, 2], $object);
+                it('not deprecated on without parameters', function () {
 
-                expect($actual)->toBe(true);
+                    $object = new \AclassWithNotDeprecatedFunctions();
+                    $actual = isDeprecated('foo', [], $object);
+                    expect($actual)->toBe(false);
+
+                });
+
+                it('not deprecated on with parameters', function () {
+
+                    $object = new \AclassWithNotDeprecatedFunctions();
+                    $actual = isDeprecated('foo2', [1, 2], $object);
+                    expect($actual)->toBe(false);
+
+                });
 
             });
 
