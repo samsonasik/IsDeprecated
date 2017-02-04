@@ -31,7 +31,13 @@ composer require samsonasik/is-deprecated
 Usage
 -----
 
-**On independent function level**
+The usage is by follow its signature:
+
+```php
+isDeprecated(string $function, array $parameters = [], $object = null): bool
+```
+
+**Example On independent function level**
 
 ```php
 include 'vendor/autoload.php'; // may already handled by your framework
@@ -69,7 +75,7 @@ var_dump(isDeprecated('foonotdeprecated'));           // false
 var_dump(isDeprecated('foo2notdeprecated', [1, 2]));  // false
 ```
 
-**On function inside object level**
+**Example On function inside object level**
 
 ```php
 include 'vendor/autoload.php'; // may already handled by your framework
@@ -112,7 +118,7 @@ var_dump(isDeprecated('foonotdeprecated', [], $object));        // false
 var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
 ```
 
-**On core PHP function**
+**Example On core PHP function**
 
 ```php
 //on php 7.0
