@@ -17,21 +17,21 @@ Features
 
 - [x] Detect on independent function level   (E_USER_DEPRECATED)
 - [x] Detect on function inside object level (E_USER_DEPRECATED)
-- [x] Detect on core php function            (E_DEPRECATED) 
+- [x] Detect on core php function            (E_DEPRECATED)
 
 Installation
 ------------
 
-**1. Require uses [composer](https://getcomposer.org/).**
+Require uses [composer](https://getcomposer.org/):
 
 ```sh
 composer require samsonasik/is-deprecated
 ```
 
-**2. Usage**
+Usage
+-----
 
-On independent function level
------------------------------
+**On independent function level**
 
 ```php
 include 'vendor/autoload.php'; // may already handled by your framework
@@ -69,8 +69,7 @@ var_dump(isDeprecated('foonotdeprecated'));           // false
 var_dump(isDeprecated('foo2notdeprecated', [1, 2]));  // false
 ```
 
-On function inside object level
--------------------------------
+**On function inside object level**
 
 ```php
 include 'vendor/autoload.php'; // may already handled by your framework
@@ -113,8 +112,7 @@ var_dump(isDeprecated('foonotdeprecated', [], $object));        // false
 var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
 ```
 
-On core PHP function
---------------------
+**On core PHP function**
 
 ```php
 //on php 7.0
