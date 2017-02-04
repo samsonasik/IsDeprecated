@@ -33,6 +33,8 @@ On independent function level
 -----------------------------
 
 ```php
+include 'vendor/autoload.php'; // may already handled by your framework
+
 use function IsDeprecated\isDeprecated;
 
 function foo()
@@ -55,6 +57,8 @@ On function inside object level
 -------------------------------
 
 ```php
+include 'vendor/autoload.php'; // may already handled by your framework
+
 use function IsDeprecated\isDeprecated;
 
 class Aclass
