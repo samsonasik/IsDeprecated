@@ -24,7 +24,7 @@ Installation
 **1. Require this module uses [composer](https://getcomposer.org/).**
 
 ```sh
-composer require samsonasik/is-deprecated
+composer require samsonasik/is-deprecated:dev-master
 ```
 
 **2. Usage**
