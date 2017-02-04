@@ -21,10 +21,10 @@ Features
 Installation
 ------------
 
-**1. Require this module uses [composer](https://getcomposer.org/).**
+**1. Require uses [composer](https://getcomposer.org/).**
 
 ```sh
-composer require samsonasik/is-deprecated:dev-master
+composer require samsonasik/is-deprecated
 ```
 
 **2. Usage**
