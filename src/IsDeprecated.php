@@ -5,6 +5,12 @@ namespace IsDeprecated;
 use ErrorException;
 use Zend\Stdlib\ErrorHandler;
 
+/**
+ * @param  string      $function     function name
+ * @param  array       $parameters   array of function parameters
+ * @param  object|null $object       object if function is called by object
+ * @return bool
+ */
 function isDeprecated(string $function, array $parameters = [], $object = null): bool
 {
     ob_start();

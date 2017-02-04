@@ -34,6 +34,12 @@ Usage
 The usage is by follow its signature:
 
 ```php
+/**
+ * @param  string      $function     function name
+ * @param  array       $parameters   array of function parameters
+ * @param  object|null $object       object if function is called by object
+ * @return bool
+ */
 isDeprecated(string $function, array $parameters = [], $object = null): bool
 ```
 
