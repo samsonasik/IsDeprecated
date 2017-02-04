@@ -10,7 +10,7 @@ IsDeprecated
 Introduction
 ------------
 
-IsDeprecated can help you detect if your function is deprecated with E_USER_DEPRECATED level.
+IsDeprecated is PHP7 Helper that can help you detect if your function is deprecated with E_USER_DEPRECATED level.
 
 Features
 --------
