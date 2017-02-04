@@ -8,7 +8,7 @@ use Zend\Stdlib\ErrorHandler;
 function isDeprecated(string $function, array $parameters = [], $object = null): bool
 {
     ob_start();
-    ErrorHandler::start(E_USER_DEPRECATED);
+    ErrorHandler::start(E_USER_DEPRECATED|E_DEPRECATED);
     if (is_object($object)) {
         $object->$function(...$parameters);
     }

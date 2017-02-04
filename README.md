@@ -10,13 +10,14 @@ IsDeprecated
 Introduction
 ------------
 
-IsDeprecated is PHP7 Helper that can help you detect if your function is deprecated with E_USER_DEPRECATED level.
+IsDeprecated is PHP7 Helper that can help you detect if your function is deprecated with E_USER_DEPRECATED and E_DEPRECATED level.
 
 Features
 --------
 
-- [x] Detect on independent function level
-- [x] Detect on function inside object level
+- [x] Detect on independent function level   (E_USER_DEPRECATED)
+- [x] Detect on function inside object level (E_USER_DEPRECATED)
+- [x] Detect on core php function            (E_DEPRECATED) 
 
 Installation
 ------------
@@ -110,6 +111,17 @@ var_dump(isDeprecated('foo2', [1, 2], $object));                // true
 // not deprecated
 var_dump(isDeprecated('foonotdeprecated', [], $object));        // false
 var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
+```
+
+On core PHP function
+--------------------
+
+```php
+//on php 7.0
+var_dump(isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]));  // false
+
+//on php 7.1
+var_dump(isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]));  // true
 ```
 
 Limitation

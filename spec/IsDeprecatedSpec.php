@@ -102,6 +102,28 @@ describe('IsDeprecated', function () {
 
         });
 
+        context('core php function', function () {
+
+            it('returns not deprecated in php 7.0', function () {
+
+                skipIf(PHP_VERSION_ID > 70000);
+
+                $actual = isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]);
+                expect($actual)->toBe(false);
+
+            });
+
+            it('returns deprecated in php 7.1', function () {
+
+                skipIf(PHP_VERSION_ID < 70100);
+
+                $actual = isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]);
+                expect($actual)->toBe(true);
+
+            });
+
+        });
+
     });
 
 });
