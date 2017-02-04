@@ -81,6 +81,11 @@ var_dump(isDeprecated('foo', [], $object));      // true
 var_dump(isDeprecated('foo', [1, 2], $object));  // true
 ```
 
+Limitation
+----------
+
+Function actually already called. It currently ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecated()` returns true. 
+
 Contributing
 ------------
 Contributions are very welcome. Please read [CONTRIBUTING.md](https://github.com/samsonasik/IsDeprecated/blob/master/CONTRIBUTING.md)
