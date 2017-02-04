@@ -49,8 +49,23 @@ function foo2($parameter1, $parameter2)
     echo 'foo2' . PHP_EOL;
 }
 
-var_dump(isDeprecated('foo'));          // true
-var_dump(isDeprecated('foo', [1, 2]));  // true
+function foonotdeprecated()
+{
+    echo 'foo' . PHP_EOL;
+}
+
+function foo2notdeprecated($parameter1, $parameter2)
+{
+    echo 'foo2' . PHP_EOL;
+}
+
+// deprecated
+var_dump(isDeprecated('foo'));                        // true
+var_dump(isDeprecated('foo2', [1, 2]));                // true
+
+// not deprecated
+var_dump(isDeprecated('foonotdeprecated'));           // false
+var_dump(isDeprecated('foo2notdeprecated', [1, 2]));  // false
 ```
 
 On function inside object level
@@ -74,17 +89,33 @@ class Aclass
         trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
         echo 'foo2' . PHP_EOL;
     }
+
+    function foonotdeprecated()
+    {
+        echo 'foo' . PHP_EOL;
+    }
+
+    function foo2notdeprecated($parameter1, $parameter2)
+    {
+        echo 'foo2' . PHP_EOL;
+    }
 }
 
 $object = new Aclass();
-var_dump(isDeprecated('foo', [], $object));      // true
-var_dump(isDeprecated('foo', [1, 2], $object));  // true
+
+// deprecated
+var_dump(isDeprecated('foo', [], $object));                     // true
+var_dump(isDeprecated('foo2', [1, 2], $object));                // true
+
+// not deprecated
+var_dump(isDeprecated('foonotdeprecated', [], $object));        // false
+var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
 ```
 
 Limitation
 ----------
 
-Function actually already called. It currently ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecated()` returns true. 
+Function actually already called. It currently ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecated()` returns true.
 
 Contributing
 ------------
