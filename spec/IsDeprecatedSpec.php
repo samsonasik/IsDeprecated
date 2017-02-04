@@ -106,7 +106,7 @@ describe('IsDeprecated', function () {
 
             it('returns not deprecated in php 7.0', function () {
 
-                skipIf(PHP_VERSION_ID > 70000);
+                skipIf(PHP_VERSION_ID === 70100);
 
                 $actual = isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]);
                 expect($actual)->toBe(false);

@@ -74,7 +74,7 @@ function foo2notdeprecated($parameter1, $parameter2)
 
 // deprecated
 var_dump(isDeprecated('foo'));                        // true
-var_dump(isDeprecated('foo2', [1, 2]));                // true
+var_dump(isDeprecated('foo2', [1, 2]));               // true
 
 // not deprecated
 var_dump(isDeprecated('foonotdeprecated'));           // false
