@@ -1,7 +1,7 @@
 {
     "name": "samsonasik/is-deprecated",
     "type": "library",
-    "description": "Check PHP user function is deprecated",
+    "description": "Check PHP user and core function is deprecated",
     "keywords": ["php", "deprecated", "check"],
     "homepage": "https://github.com/samsonasik/IsDeprecated",
     "license": "MIT",
