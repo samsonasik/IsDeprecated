@@ -15,9 +15,9 @@ IsDeprecated is PHP7 Helper that can help you detect if your function is depreca
 Features
 --------
 
-- [x] Detect on independent function level   (E_USER_DEPRECATED)
-- [x] Detect on function inside class level (E_USER_DEPRECATED)
-- [x] Detect on core php function            (E_DEPRECATED)
+- [x] Detect on independent function  (E_USER_DEPRECATED)
+- [x] Detect on function inside class (E_USER_DEPRECATED)
+- [x] Detect on core php function     (E_DEPRECATED)
 
 Installation
 ------------
