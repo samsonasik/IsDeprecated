@@ -3,7 +3,6 @@
 namespace IsDeprecated;
 
 use ErrorException;
-use InvalidArgumentException;
 use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
@@ -15,8 +14,17 @@ function isDeprecatedUser($function): bool
 {
     $parser    = FunctionParser::fromCallable($function);
     $tokenizer = $parser->getTokenizer();
+    if (! $index = $tokenizer->findToken('trigger_error')) {
+        return false;
+    }
 
-    return $tokenizer->hasToken('E_USER_DEPRECATED');
+    $indexNext = 4;
+    do {
+        $tokenizerWithRange = $tokenizer->getTokenRange($index + $indexNext, 3);
+        $found = $tokenizerWithRange->current()->code === 'E_USER_DEPRECATED';
+    } while ($indexNext++ <=7 && ! $found);
+
+    return $found;
 }
 
 /**
