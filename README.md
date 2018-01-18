@@ -104,6 +104,18 @@ class Aclass
     {
         echo 'foo' . PHP_EOL;
     }
+
+    // you may call inside the class
+    // with $this as first index of array parameter
+    function execute()
+    {
+        if (isDeprecatedUser([$this, 'foo'])) {
+            $this->foonotdeprecated();
+            return;
+        }
+
+        foo();
+    }
 }
 
 // deprecated

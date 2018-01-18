@@ -7,7 +7,7 @@ use function IsDeprecated\isDeprecatedCore;
 
 describe('IsDeprecated', function () {
 
-    describe('isDeprecated()', function () {
+    describe('isDeprecatedUser()', function () {
 
         context('independent function' , function () {
 
@@ -45,6 +45,7 @@ describe('IsDeprecated', function () {
             beforeAll(function () {
                 include __DIR__ . '/Fixture/deprecatedfunctioninsideclass.php';
                 include __DIR__ . '/Fixture/not-deprecatedfunctioninsideclass.php';
+                include __DIR__ . '/Fixture/call-isDeprecated-user-inside-class.php';
             });
 
             context('deprecated' , function () {
@@ -83,7 +84,24 @@ describe('IsDeprecated', function () {
 
             });
 
+            context('deprecated check call inside the class itself as the object represent as $this' , function () {
+
+                it('deprecated with pass object of class at first index of array parameter', function () {
+
+                    $actual = function () {
+                        $object = new \ClassWithIsDeprecatedCall();
+                        $object->bar();
+                    };
+                    expect($actual)->toMatchEcho('#bar#');
+
+                });
+
+            });
+
         });
+    });
+
+    describe('isDeprecatedCore()', function () {
 
         context('core php function', function () {
 
