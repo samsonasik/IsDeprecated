@@ -98,7 +98,7 @@ describe('IsDeprecated', function () {
 
             it('returns not deprecated in php 7.1', function () {
 
-                skipIf(PHP_VERSION_ID > 70200);
+                skipIf(PHP_VERSION_ID >= 70200);
 
                 $actual = isDeprecatedCore(function () {
                     create_function('$a,$b', 'return "ln($a) + ln($b) = " . log($a * $b);');
