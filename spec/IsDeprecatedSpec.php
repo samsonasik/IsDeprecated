@@ -76,7 +76,7 @@ describe('IsDeprecated', function () {
             it('returns not deprecated in php 7.0', function () {
 
                 skipIf(PHP_VERSION_ID > 70000);
-                skipIf(PHP_VERSION_ID == 70200);
+                skipIf(PHP_VERSION_ID >= 70200);
 
                 $actual = isDeprecatedCore(function () {
                     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
@@ -88,7 +88,7 @@ describe('IsDeprecated', function () {
             it('returns deprecated in php 7.1', function () {
 
                 skipIf(PHP_VERSION_ID < 70100);
-                skipIf(PHP_VERSION_ID == 70200);
+                skipIf(PHP_VERSION_ID >= 70200);
 
                 $actual = isDeprecatedCore(function () {
                     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
