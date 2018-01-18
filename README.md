@@ -35,12 +35,10 @@ The usage is by follow its signature:
 
 ```php
 /**
- * @param  string      $function     function name
- * @param  array       $parameters   array of function parameters
- * @param  object|null $object       object if function is called by object
+ * @param  callable    $function     callable function
  * @return bool
  */
-isDeprecated(string $function, array $parameters = [], $object = null): bool
+isDeprecated(callable $function): bool
 ```
 
 **Example On independent function level**
@@ -56,29 +54,24 @@ function foo()
     echo 'foo' . PHP_EOL;
 }
 
-function foo2($parameter1, $parameter2)
-{
-    trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
-    echo 'foo2' . PHP_EOL;
-}
-
 function foonotdeprecated()
 {
     echo 'foo' . PHP_EOL;
 }
 
-function foo2notdeprecated($parameter1, $parameter2)
-{
-    echo 'foo2' . PHP_EOL;
-}
-
 // deprecated
-var_dump(isDeprecated('foo'));                        // true
-var_dump(isDeprecated('foo2', [1, 2]));               // true
+var_dump(
+    isDeprecated(function () {
+        foo();
+    })
+);                        // true
 
 // not deprecated
-var_dump(isDeprecated('foonotdeprecated'));           // false
-var_dump(isDeprecated('foo2notdeprecated', [1, 2]));  // false
+var_dump(
+    isDeprecated(function () {
+        foonotdeprecated();
+    })
+);                        // false
 ```
 
 **Example On function inside object level**
@@ -96,32 +89,27 @@ class Aclass
         echo 'foo' . PHP_EOL;
     }
 
-    function foo2($parameter1, $parameter2)
-    {
-        trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
-        echo 'foo2' . PHP_EOL;
-    }
-
     function foonotdeprecated()
     {
         echo 'foo' . PHP_EOL;
-    }
-
-    function foo2notdeprecated($parameter1, $parameter2)
-    {
-        echo 'foo2' . PHP_EOL;
     }
 }
 
 $object = new Aclass();
 
 // deprecated
-var_dump(isDeprecated('foo', [], $object));                     // true
-var_dump(isDeprecated('foo2', [1, 2], $object));                // true
+var_dump(
+    isDeprecated(function () {
+        (new \Aclass())->foo();
+    })
+);                        // true
 
 // not deprecated
-var_dump(isDeprecated('foonotdeprecated', [], $object));        // false
-var_dump(isDeprecated('foo2notdeprecated', [1, 2], $object));   // false
+var_dump(
+    isDeprecated(function () {
+        (new \Aclass())->foonotdeprecated();
+    })
+);                        // false
 ```
 
 **Example On core PHP function**
@@ -131,11 +119,19 @@ include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecated;
 
-//on php 7.0
-var_dump(isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]));  // false
-
 //on php 7.1
-var_dump(isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]));  // true
+var_dump(
+    isDeprecated(function () {
+        mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+    })
+);  // true
+
+//on php 7.0
+var_dump(
+    isDeprecated(function () {
+        mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+    })
+);  // false
 ```
 
 Limitation
