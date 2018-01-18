@@ -72,6 +72,16 @@ var_dump(
         foonotdeprecated();
     })
 );                        // false
+
+// Usage Example:
+$function = function () {
+    foo();
+};
+if (isDeprecated($function)) {
+    foonotdeprecated();;
+} else {
+    $function();
+}
 ```
 
 **Example On function inside object level**
@@ -110,6 +120,16 @@ var_dump(
         (new \Aclass())->foonotdeprecated();
     })
 );                        // false
+
+// Usage Example:
+$function = function () {
+    (new \Aclass())->foo();
+};
+if (isDeprecated($function)) {
+    (new \Aclass())->foonotdeprecated();;
+} else {
+    $function();
+}
 ```
 
 **Example On core PHP function**
@@ -132,6 +152,16 @@ var_dump(
         mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
     })
 );  // false
+
+// Usage Example:
+$function = function () {
+    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+};
+if (isDeprecated($function)) {
+    // alternative function, eg: openssl ...
+} else {
+    $function();
+}
 ```
 
 Limitation
