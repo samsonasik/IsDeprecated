@@ -53,7 +53,7 @@ function isDeprecatedUser($function): bool
 function isDeprecatedCore(callable $function): bool
 ```
 
-**Example On independent function level**
+**Example On independent function**
 
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
@@ -85,7 +85,7 @@ if (isDeprecatedUser('foo')) {
 }
 ```
 
-**Example On function inside class level**
+**Example On function inside class**
 
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
