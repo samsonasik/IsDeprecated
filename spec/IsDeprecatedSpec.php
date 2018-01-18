@@ -95,6 +95,17 @@ describe('IsDeprecated', function () {
 
             });
 
+            it('returns deprecated in php 7.2', function () {
+
+                skipIf(PHP_VERSION_ID < 70200);
+
+                $actual = isDeprecatedCore(function () {
+                    create_function('$a,$b', 'return "ln($a) + ln($b) = " . log($a * $b);');
+                });
+                expect($actual)->toBe(true);
+
+            });
+
         });
 
     });
