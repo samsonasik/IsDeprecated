@@ -17,16 +17,11 @@ describe('IsDeprecated', function () {
 
             context('deprecated' , function () {
 
-                it('deprecated on without parameters', function () {
+                it('deprecated', function () {
 
-                    $actual = isDeprecated('foo');
-                    expect($actual)->toBe(true);
-
-                });
-
-                it('deprecated on with parameters', function () {
-
-                    $actual = isDeprecated('foo2', [1, 2]);
+                    $actual = isDeprecated(function () {
+                        foo();
+                    });
                     expect($actual)->toBe(true);
 
                 });
@@ -35,16 +30,11 @@ describe('IsDeprecated', function () {
 
             context('not deprecated' , function () {
 
-                it('not deprecated on without parameters', function () {
+                it('not deprecated', function () {
 
-                    $actual = isDeprecated('foonotdeprecated');
-                    expect($actual)->toBe(false);
-
-                });
-
-                it('not deprecated on with parameters', function () {
-
-                    $actual = isDeprecated('foo2notdeprecated', [1, 2]);
+                    $actual = isDeprecated(function () {
+                        foonotdeprecated();
+                    });
                     expect($actual)->toBe(false);
 
                 });
@@ -62,18 +52,11 @@ describe('IsDeprecated', function () {
 
             context('deprecated' , function () {
 
-                it('deprecated on without parameters', function () {
+                it('deprecated', function () {
 
-                    $object = new \Aclass();
-                    $actual = isDeprecated('foo', [], $object);
-                    expect($actual)->toBe(true);
-
-                });
-
-                it('deprecated on with parameters', function () {
-
-                    $object = new \Aclass();
-                    $actual = isDeprecated('foo2', [1, 2], $object);
+                    $actual = isDeprecated(function () {
+                       (new \Aclass())->foo();
+                    });
                     expect($actual)->toBe(true);
 
                 });
@@ -82,18 +65,11 @@ describe('IsDeprecated', function () {
 
             context('not deprecated' , function () {
 
-                it('not deprecated on without parameters', function () {
+                it('not deprecated', function () {
 
-                    $object = new \AclassWithNotDeprecatedFunctions();
-                    $actual = isDeprecated('foo', [], $object);
-                    expect($actual)->toBe(false);
-
-                });
-
-                it('not deprecated on with parameters', function () {
-
-                    $object = new \AclassWithNotDeprecatedFunctions();
-                    $actual = isDeprecated('foo2', [1, 2], $object);
+                    $actual = isDeprecated(function () {
+                        (new \AclassWithNotDeprecatedFunctions())->foo();
+                    });
                     expect($actual)->toBe(false);
 
                 });
@@ -108,7 +84,9 @@ describe('IsDeprecated', function () {
 
                 skipIf(PHP_VERSION_ID > 70000);
 
-                $actual = isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]);
+                $actual = isDeprecated(function () {
+                    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+                });
                 expect($actual)->toBe(false);
 
             });
@@ -117,7 +95,9 @@ describe('IsDeprecated', function () {
 
                 skipIf(PHP_VERSION_ID < 70100);
 
-                $actual = isDeprecated('mcrypt_get_iv_size', [MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC]);
+                $actual = isDeprecated(function () {
+                    mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+                });
                 expect($actual)->toBe(true);
 
             });
