@@ -60,18 +60,16 @@ function foonotdeprecated()
 }
 
 // deprecated
-var_dump(
-    isDeprecated(function () {
-        foo();
-    })
-);                        // true
+$function = function () {
+    foo();
+};
+var_dump(isDeprecated($function)); // true
 
 // not deprecated
-var_dump(
-    isDeprecated(function () {
-        foonotdeprecated();
-    })
-);                        // false
+$function = function () {
+    foonotdeprecated();
+};
+var_dump(isDeprecated($function)); // false
 
 // Usage Example:
 $function = function () {
@@ -105,21 +103,17 @@ class Aclass
     }
 }
 
-$object = new Aclass();
-
 // deprecated
-var_dump(
-    isDeprecated(function () {
-        (new \Aclass())->foo();
-    })
-);                        // true
+$function = function () {
+    (new \Aclass())->foo();
+};
+var_dump(isDeprecated($function)); // true
 
 // not deprecated
-var_dump(
-    isDeprecated(function () {
-        (new \Aclass())->foonotdeprecated();
-    })
-);                        // false
+$function = function () {
+    (new \Aclass())->foonotdeprecated();
+};
+var_dump(isDeprecated($function)); // false
 
 // Usage Example:
 $function = function () {
@@ -139,24 +133,17 @@ include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecated;
 
-//on php 7.1
-var_dump(
-    isDeprecated(function () {
-        mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    })
-);  // true
-
-//on php 7.0
-var_dump(
-    isDeprecated(function () {
-        mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-    })
-);  // false
-
-// Usage Example:
 $function = function () {
     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
 };
+
+//on php 7.1
+var_dump(isDeprecated($function)); // true
+
+//on php 7.0
+var_dump(isDeprecated($function)); // false
+
+// Usage Example:
 if (isDeprecated($function)) {
     // alternative function, eg: openssl ...
 } else {
