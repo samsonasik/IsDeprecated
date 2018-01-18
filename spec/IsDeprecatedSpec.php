@@ -40,7 +40,7 @@ describe('IsDeprecated', function () {
 
         });
 
-        context('function inside object' , function () {
+        context('function inside class' , function () {
 
             beforeAll(function () {
                 include __DIR__ . '/Fixture/deprecatedfunctioninsideclass.php';

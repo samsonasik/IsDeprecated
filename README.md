@@ -16,7 +16,7 @@ Features
 --------
 
 - [x] Detect on independent function level   (E_USER_DEPRECATED)
-- [x] Detect on function inside object level (E_USER_DEPRECATED)
+- [x] Detect on function inside class level (E_USER_DEPRECATED)
 - [x] Detect on core php function            (E_DEPRECATED)
 
 Installation
@@ -85,7 +85,7 @@ if (isDeprecatedUser('foo')) {
 }
 ```
 
-**Example On function inside object level**
+**Example On function inside class level**
 
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
