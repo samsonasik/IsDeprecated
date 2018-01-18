@@ -8,7 +8,7 @@ use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
 /**
- * @param  string|array $function the "functionName" or ["ClassName", "functionName"]
+ * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"]
  * @return bool
  */
 function isDeprecatedUser($function): bool

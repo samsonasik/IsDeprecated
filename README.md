@@ -107,10 +107,12 @@ class Aclass
 }
 
 // deprecated
-var_dump(isDeprecatedUser(['Aclass', 'foo'])); // true
+var_dump(isDeprecatedUser(['Aclass', 'foo'])); // true OR
+var_dump(isDeprecatedUser([new \Aclass(), 'foo'])); // true
 
 // not deprecated
 var_dump(isDeprecatedUser(['Aclass', 'foonotdeprecated'])); // false
+var_dump(isDeprecatedUser([new \Aclass, 'foonotdeprecated'])); // false
 
 // Usage Example:
 if (isDeprecatedUser(['Aclass', 'foo'])) {

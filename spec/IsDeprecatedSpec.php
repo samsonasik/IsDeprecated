@@ -49,9 +49,16 @@ describe('IsDeprecated', function () {
 
             context('deprecated' , function () {
 
-                it('deprecated', function () {
+                it('deprecated with pass string class name at first index of array parameter', function () {
 
                     $actual = isDeprecatedUser(['Aclass', 'foo']);
+                    expect($actual)->toBe(true);
+
+                });
+
+                it('deprecated with pass object of class at first index of array parameter', function () {
+
+                    $actual = isDeprecatedUser([new \Aclass(), 'foo']);
                     expect($actual)->toBe(true);
 
                 });
@@ -60,9 +67,16 @@ describe('IsDeprecated', function () {
 
             context('not deprecated' , function () {
 
-                it('not deprecated', function () {
+                it('not deprecated with pass string class name at first index of array parameter', function () {
 
                     $actual = isDeprecatedUser(['AclassWithNotDeprecatedFunctions', 'foo']);
+                    expect($actual)->toBe(false);
+
+                });
+
+                it('not deprecated with pass object of class at first index of array parameter', function () {
+
+                    $actual = isDeprecatedUser([new \AclassWithNotDeprecatedFunctions(), 'foo']);
                     expect($actual)->toBe(false);
 
                 });
