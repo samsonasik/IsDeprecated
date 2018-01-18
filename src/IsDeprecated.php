@@ -3,16 +3,30 @@
 namespace IsDeprecated;
 
 use ErrorException;
+use InvalidArgumentException;
+use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
 /**
- * @param  callable    $function     callable function
+ * @param  string|array $function the "functionName" or ["ClassName", "functionName"]
  * @return bool
  */
-function isDeprecated(callable $function): bool
+function isDeprecatedUser($function): bool
+{
+    $parser    = FunctionParser::fromCallable($function);
+    $tokenizer = $parser->getTokenizer();
+
+    return $tokenizer->hasToken('E_USER_DEPRECATED');
+}
+
+/**
+ * @param  callable $function callable function
+ * @return bool
+ */
+function isDeprecatedCore(callable $function): bool
 {
     ob_start();
-    ErrorHandler::start(E_USER_DEPRECATED|E_DEPRECATED);
+    ErrorHandler::start(E_DEPRECATED);
     $function();
     $result = ErrorHandler::stop();
     ob_clean();

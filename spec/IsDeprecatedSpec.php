@@ -2,7 +2,8 @@
 
 namespace IsDeprecatedSpec;
 
-use function IsDeprecated\isDeprecated;
+use function IsDeprecated\isDeprecatedUser;
+use function IsDeprecated\isDeprecatedCore;
 
 describe('IsDeprecated', function () {
 
@@ -19,9 +20,7 @@ describe('IsDeprecated', function () {
 
                 it('deprecated', function () {
 
-                    $actual = isDeprecated(function () {
-                        foo();
-                    });
+                    $actual = isDeprecatedUser('foo');
                     expect($actual)->toBe(true);
 
                 });
@@ -32,9 +31,7 @@ describe('IsDeprecated', function () {
 
                 it('not deprecated', function () {
 
-                    $actual = isDeprecated(function () {
-                        foonotdeprecated();
-                    });
+                    $actual = isDeprecatedUser('foonotdeprecated');
                     expect($actual)->toBe(false);
 
                 });
@@ -54,9 +51,7 @@ describe('IsDeprecated', function () {
 
                 it('deprecated', function () {
 
-                    $actual = isDeprecated(function () {
-                       (new \Aclass())->foo();
-                    });
+                    $actual = isDeprecatedUser(['Aclass', 'foo']);
                     expect($actual)->toBe(true);
 
                 });
@@ -67,9 +62,7 @@ describe('IsDeprecated', function () {
 
                 it('not deprecated', function () {
 
-                    $actual = isDeprecated(function () {
-                        (new \AclassWithNotDeprecatedFunctions())->foo();
-                    });
+                    $actual = isDeprecatedUser(['AclassWithNotDeprecatedFunctions', 'foo']);
                     expect($actual)->toBe(false);
 
                 });
@@ -84,7 +77,7 @@ describe('IsDeprecated', function () {
 
                 skipIf(PHP_VERSION_ID > 70000);
 
-                $actual = isDeprecated(function () {
+                $actual = isDeprecatedCore(function () {
                     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
                 });
                 expect($actual)->toBe(false);
@@ -95,7 +88,7 @@ describe('IsDeprecated', function () {
 
                 skipIf(PHP_VERSION_ID < 70100);
 
-                $actual = isDeprecated(function () {
+                $actual = isDeprecatedCore(function () {
                     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
                 });
                 expect($actual)->toBe(true);

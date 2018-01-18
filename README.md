@@ -31,14 +31,26 @@ composer require samsonasik/is-deprecated
 Usage
 -----
 
-The usage is by follow its signature:
+There are 2 functions:
+
+*1. For user defined function*
 
 ```php
 /**
- * @param  callable    $function     callable function
+ * @param  string|array $function the "functionName" or ["ClassName", "functionName"]
  * @return bool
  */
-isDeprecated(callable $function): bool
+function isDeprecatedUser($function): bool
+```
+
+*2. For core PHP function*
+
+```php
+/**
+ * @param  callable $function callable function
+ * @return bool
+ */
+function isDeprecatedCore(callable $function): bool
 ```
 
 **Example On independent function level**
@@ -46,7 +58,7 @@ isDeprecated(callable $function): bool
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
 
-use function IsDeprecated\isDeprecated;
+use function IsDeprecated\isDeprecatedUser;
 
 function foo()
 {
@@ -60,25 +72,16 @@ function foonotdeprecated()
 }
 
 // deprecated
-$function = function () {
-    foo();
-};
-var_dump(isDeprecated($function)); // true
+var_dump(isDeprecatedUser('foo')); // true
 
 // not deprecated
-$function = function () {
-    foonotdeprecated();
-};
-var_dump(isDeprecated($function)); // false
+var_dump(isDeprecatedUser('foonotdeprecated')); // false
 
 // Usage Example:
-$function = function () {
-    foo();
-};
-if (isDeprecated($function)) {
+if (isDeprecatedUser('foo')) {
     foonotdeprecated();;
 } else {
-    $function();
+    foo();
 }
 ```
 
@@ -87,7 +90,7 @@ if (isDeprecated($function)) {
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
 
-use function IsDeprecated\isDeprecated;
+use function IsDeprecated\isDeprecatedUser;
 
 class Aclass
 {
@@ -104,25 +107,16 @@ class Aclass
 }
 
 // deprecated
-$function = function () {
-    (new \Aclass())->foo();
-};
-var_dump(isDeprecated($function)); // true
+var_dump(isDeprecatedUser(['Aclass', 'foo'])); // true
 
 // not deprecated
-$function = function () {
-    (new \Aclass())->foonotdeprecated();
-};
-var_dump(isDeprecated($function)); // false
+var_dump(isDeprecatedUser(['Aclass', 'foonotdeprecated'])); // false
 
 // Usage Example:
-$function = function () {
-    (new \Aclass())->foo();
-};
-if (isDeprecated($function)) {
+if (isDeprecatedUser(['Aclass', 'foo'])) {
     (new \Aclass())->foonotdeprecated();;
 } else {
-    $function();
+    (new \Aclass())->foo();;
 }
 ```
 
@@ -131,20 +125,20 @@ if (isDeprecated($function)) {
 ```php
 include 'vendor/autoload.php'; // autoload may already handled by your framework
 
-use function IsDeprecated\isDeprecated;
+use function IsDeprecated\isDeprecatedCore;
 
 $function = function () {
     mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
 };
 
 //on php 7.1
-var_dump(isDeprecated($function)); // true
+var_dump(isDeprecatedCore($function)); // true
 
 //on php 7.0
-var_dump(isDeprecated($function)); // false
+var_dump(isDeprecatedCore($function)); // false
 
 // Usage Example:
-if (isDeprecated($function)) {
+if (isDeprecatedCore($function)) {
     // alternative function, eg: openssl ...
 } else {
     $function();
@@ -154,7 +148,7 @@ if (isDeprecated($function)) {
 Limitation
 ----------
 
-Function actually already called. It currently ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecated()` returns true.
+For Core PHP Functions, the function passed actually already called. It ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecatedCore()` returns true.
 
 Contributing
 ------------
