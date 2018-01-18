@@ -114,7 +114,7 @@ class Aclass
             return;
         }
 
-        foo();
+        $this->foo();
     }
 }
 
