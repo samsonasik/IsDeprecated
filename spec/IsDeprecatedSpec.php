@@ -4,6 +4,7 @@ namespace IsDeprecatedSpec;
 
 use function IsDeprecated\isDeprecatedUser;
 use function IsDeprecated\isDeprecatedCore;
+use Throwable;
 
 describe('IsDeprecated', function () {
 
@@ -33,6 +34,28 @@ describe('IsDeprecated', function () {
 
                     $actual = isDeprecatedUser('foonotdeprecated');
                     expect($actual)->toBe(false);
+
+                });
+
+            });
+
+        });
+
+        context('different trigger_error' , function () {
+
+            beforeAll(function () {
+                include __DIR__ . '/Fixture/another-trigger-error.php';
+            });
+
+            context('deprecated' , function () {
+
+                it('show actual error', function () {
+
+                    try {
+                        isDeprecatedUser('another_trigger_error');
+                    } catch (Throwable $t) {
+                        expect($actual)->toBeAnInstanceOf(Throwable::class);
+                    }
 
                 });
 

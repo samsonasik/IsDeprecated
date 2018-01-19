@@ -20,12 +20,15 @@ function isDeprecatedUser($function): bool
     }
 
     $indexNext = 4;
+    $found     = false;
     do {
         try {
             $tokenizerWithRange = $tokenizer->getTokenRange($index + $indexNext, 3);
             $found = $tokenizerWithRange->current()->code === 'E_USER_DEPRECATED';
         } catch (Exception $e) {
-            return false;
+            // different trigger_error, eg: E_USER_NOTICE
+            // execute the $function itself
+            $function();
         }
     } while ($indexNext++ <=7 && ! $found);
 
