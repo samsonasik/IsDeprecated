@@ -37,7 +37,9 @@ There are 2 functions:
 
 ```php
 /**
- * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"]
+ * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"] or "ClassName::functionName"
+ * @throws Exception when trigger_error found but the error is not E_USER_DEPRECATED
+ * @throws Exception when trigger_error and E_USER_DEPRECATED found but misplaced
  * @return bool
  */
 function isDeprecatedUser($function): bool
@@ -120,11 +122,13 @@ class Aclass
 
 // deprecated
 var_dump(isDeprecatedUser(['Aclass', 'foo'])); // true OR
-var_dump(isDeprecatedUser([new \Aclass(), 'foo'])); // true
+var_dump(isDeprecatedUser([new \Aclass(), 'foo'])); // true OR
+var_dump(isDeprecatedUser('Aclass::foo')); // true
 
 // not deprecated
 var_dump(isDeprecatedUser(['Aclass', 'foonotdeprecated'])); // false OR
-var_dump(isDeprecatedUser([new \Aclass, 'foonotdeprecated'])); // false
+var_dump(isDeprecatedUser([new \Aclass, 'foonotdeprecated'])); // false OR
+var_dump(isDeprecatedUser('Aclass::foonotdeprecated')); // false
 
 // Usage Example:
 if (isDeprecatedUser(['Aclass', 'foo'])) {

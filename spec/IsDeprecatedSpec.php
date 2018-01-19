@@ -64,6 +64,25 @@ describe('IsDeprecated', function () {
 
         });
 
+        context('missplaced trigger_error' , function () {
+
+            context('deprecated' , function () {
+
+                it('show actual error', function () {
+
+                    $closure = function () {
+                        isDeprecatedUser('missPlacedDeprecated');
+                    };
+                    expect($closure)->toThrow(new Exception(
+                        'function missPlacedDeprecated has trigger_error and E_USER_DEPRECATED token but misplaced'
+                    ));
+
+                });
+
+            });
+
+        });
+
         context('function inside class' , function () {
 
             beforeAll(function () {
@@ -84,6 +103,13 @@ describe('IsDeprecated', function () {
                 it('deprecated with pass object of class at first index of array parameter', function () {
 
                     $actual = isDeprecatedUser([new \Aclass(), 'foo']);
+                    expect($actual)->toBe(true);
+
+                });
+
+                it('deprecated with pass string class name::function name', function () {
+
+                    $actual = isDeprecatedUser('Aclass::foo');
                     expect($actual)->toBe(true);
 
                 });
@@ -115,6 +141,16 @@ describe('IsDeprecated', function () {
                     $actual = function () {
                         $object = new \ClassWithIsDeprecatedCall();
                         $object->bar();
+                    };
+                    expect($actual)->toMatchEcho('#bar#');
+
+                });
+
+                it('deprecated with pass object of class at first index of array parameter', function () {
+
+                    $actual = function () {
+                        $object = new \ClassWithIsDeprecatedCall();
+                        $object->bar2();
                     };
                     expect($actual)->toMatchEcho('#bar#');
 
