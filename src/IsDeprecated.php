@@ -26,9 +26,12 @@ function isDeprecatedUser($function): bool
             $tokenizerWithRange = $tokenizer->getTokenRange($index + $indexNext, 3);
             $found = $tokenizerWithRange->current()->code === 'E_USER_DEPRECATED';
         } catch (Exception $e) {
-            // different trigger_error, eg: E_USER_NOTICE
-            // execute the $function itself
-            $function();
+            throw new Exception(
+                sprintf(
+                    'function %s has trigger_error but not E_USER_DEPRECATED',
+                    $function
+                )
+            );
         }
     } while ($indexNext++ <=7 && ! $found);
 

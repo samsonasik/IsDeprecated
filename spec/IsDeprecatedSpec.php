@@ -4,7 +4,7 @@ namespace IsDeprecatedSpec;
 
 use function IsDeprecated\isDeprecatedUser;
 use function IsDeprecated\isDeprecatedCore;
-use Throwable;
+use Exception;
 
 describe('IsDeprecated', function () {
 
@@ -51,11 +51,12 @@ describe('IsDeprecated', function () {
 
                 it('show actual error', function () {
 
-                    try {
+                    $closure = function () {
                         isDeprecatedUser('another_trigger_error');
-                    } catch (Throwable $t) {
-                        expect($actual)->toBeAnInstanceOf(Throwable::class);
-                    }
+                    };
+                    expect($closure)->toThrow(new Exception(
+                        'function another_trigger_error has trigger_error but not E_USER_DEPRECATED'
+                    ));
 
                 });
 
