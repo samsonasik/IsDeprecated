@@ -2,13 +2,14 @@
 
 namespace IsDeprecatedSpec;
 
+use function IsDeprecated\isDeprecatedWithActualCall;
 use function IsDeprecated\isDeprecatedUser;
 use function IsDeprecated\isDeprecatedCore;
 use Exception;
 
 describe('IsDeprecated', function () {
 
-    describe('isDeprecatedUser()', function () {
+    describe('isDeprecatedUser() and isDeprecatedWithActualCall()', function () {
 
         context('independent function' , function () {
 
@@ -25,6 +26,16 @@ describe('IsDeprecated', function () {
                     expect($actual)->toBe(true);
 
                 });
+
+              it('deprecated in some condition', function () {
+
+                    $function = function () {
+                        deprecated_in_some_condition();
+                    };
+                    $actual = isDeprecatedWithActualCall($function);
+                    expect($actual)->toBe(true);
+
+               });
 
             });
 
@@ -146,13 +157,13 @@ describe('IsDeprecated', function () {
 
                 });
 
-                it('deprecated with pass object of class at first index of array parameter', function () {
+                it('deprecated with pass object of class at first index of array parameter with IF check, throw Exception with suggest to use isDeprecatedWithActualCall', function () {
 
                     $actual = function () {
                         $object = new \ClassWithIsDeprecatedCall();
                         $object->bar2();
                     };
-                    expect($actual)->toMatchEcho('#bar#');
+                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger has trigger_error and E_USER_DEPRECATED but has IF condition before, use isDeprecatedWithActualCall() method instead'));
 
                 });
 

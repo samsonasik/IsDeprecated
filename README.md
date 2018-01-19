@@ -45,6 +45,16 @@ There are 2 functions:
 function isDeprecatedUser($function): bool
 ```
 
+> Note: when trigger_error E_USER_DEPRECATED inside condition, you need to use `actual` call with signature:
+
+```php
+/**
+ * @param  callable $function callable function
+ * @return bool
+ */
+function isDeprecatedWithActualCall(callable $function)
+```
+
 *2. For core PHP function*
 
 ```php
@@ -73,8 +83,19 @@ function foonotdeprecated()
     echo 'foo' . PHP_EOL;
 }
 
+function fooDeprecatedWithCondition()
+{
+    if (1 === 1) {
+        trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
+        echo 'foo' . PHP_EOL;
+    }
+}
+
 // deprecated
-var_dump(isDeprecatedUser('foo')); // true
+var_dump(isDeprecatedUser('foo')); // true  OR for deprecate with condition
+var_dump(isDeprecatedWithActualCall(function () {
+    fooDeprecatedWithCondition();
+})); // true
 
 // not deprecated
 var_dump(isDeprecatedUser('foonotdeprecated')); // false
@@ -102,6 +123,14 @@ class Aclass
         echo 'foo' . PHP_EOL;
     }
 
+    function foodeprecatedWithCondition()
+    {
+        if (1 === 1) {
+            trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
+        }
+        echo 'foo' . PHP_EOL;
+    }
+
     function foonotdeprecated()
     {
         echo 'foo' . PHP_EOL;
@@ -123,7 +152,11 @@ class Aclass
 // deprecated
 var_dump(isDeprecatedUser(['Aclass', 'foo'])); // true OR
 var_dump(isDeprecatedUser([new \Aclass(), 'foo'])); // true OR
-var_dump(isDeprecatedUser('Aclass::foo')); // true
+var_dump(isDeprecatedUser('Aclass::foo')); // true OR for deprecate with condition
+
+var_dump(isDeprecatedWithActualCall(function () { // true
+    new \Aclass()->foo();
+}));
 
 // not deprecated
 var_dump(isDeprecatedUser(['Aclass', 'foonotdeprecated'])); // false OR
@@ -166,7 +199,7 @@ if (isDeprecatedCore($function)) {
 Limitation
 ----------
 
-For Core PHP Functions, the function passed actually already called. It ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecatedCore()` returns true.
+For Core PHP Functions or user function with condition (T_IF token), the function passed actually already called. It ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecatedCore()` returns true with call of `isDeprecatedWithActualCall`.
 
 Contributing
 ------------
