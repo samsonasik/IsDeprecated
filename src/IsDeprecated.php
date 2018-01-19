@@ -9,6 +9,7 @@ use Zend\Stdlib\ErrorHandler;
 
 /**
  * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"]
+ * @throws Exception when trigger_error found but the error is not E_USER_DEPRECATED
  * @return bool
  */
 function isDeprecatedUser($function): bool
