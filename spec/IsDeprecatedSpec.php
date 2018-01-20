@@ -2,7 +2,7 @@
 
 namespace IsDeprecatedSpec;
 
-use Exception;
+use InvalidArgumentException;
 use function IsDeprecated\isDeprecatedCore;
 use function IsDeprecated\isDeprecatedUser;
 use function IsDeprecated\isDeprecatedWithActualCall;
@@ -75,7 +75,7 @@ describe('IsDeprecated', function () {
                     $closure = function () {
                         isDeprecatedUser('another_trigger_error');
                     };
-                    expect($closure)->toThrow(new Exception(
+                    expect($closure)->toThrow(new InvalidArgumentException(
                         'function another_trigger_error has trigger_error but not E_USER_DEPRECATED'
                     ));
 
@@ -94,7 +94,7 @@ describe('IsDeprecated', function () {
                     $closure = function () {
                         isDeprecatedUser('missPlacedDeprecated');
                     };
-                    expect($closure)->toThrow(new Exception(
+                    expect($closure)->toThrow(new InvalidArgumentException(
                         'function missPlacedDeprecated has trigger_error and E_USER_DEPRECATED token but misplaced'
                     ));
 
@@ -167,23 +167,23 @@ describe('IsDeprecated', function () {
 
                 });
 
-                it('deprecated with pass object of class at first index of array parameter with IF check, throw Exception with suggest to use isDeprecatedWithActualCall', function () {
+                it('deprecated with pass object of class at first index of array parameter with IF check, throw InvalidArgumentException with suggest to use isDeprecatedWithActualCall', function () {
 
                     $actual = function () {
                         $object = new \ClassWithIsDeprecatedCall();
                         $object->bar2();
                     };
-                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
+                    expect($actual)->toThrow(new InvalidArgumentException('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
 
                 });
 
-                it('deprecated with pass object of class at first index of array parameter with SWITCH check, throw Exception with suggest to use isDeprecatedWithActualCall', function () {
+                it('deprecated with pass object of class at first index of array parameter with SWITCH check, throw InvalidArgumentException with suggest to use isDeprecatedWithActualCall', function () {
 
                     $actual = function () {
                         $object = new \ClassWithIsDeprecatedCall();
                         $object->bar3();
                     };
-                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger2 has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
+                    expect($actual)->toThrow(new InvalidArgumentException('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger2 has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
 
                 });
 

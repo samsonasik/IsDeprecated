@@ -3,7 +3,7 @@
 namespace IsDeprecated;
 
 use ErrorException;
-use Exception;
+use InvalidArgumentException;
 use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
@@ -28,8 +28,8 @@ function isDeprecatedWithActualCall(callable $function)
 
 /**
  * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"] or "ClassName::functionName"
- * @throws Exception when trigger_error found but the error is not E_USER_DEPRECATED
- * @throws Exception when trigger_error and E_USER_DEPRECATED found but misplaced
+ * @throws InvalidArgumentException when trigger_error found but the error is not E_USER_DEPRECATED
+ * @throws InvalidArgumentException when trigger_error and E_USER_DEPRECATED found but misplaced
  * @return bool
  */
 function isDeprecatedUser($function): bool
@@ -42,7 +42,7 @@ function isDeprecatedUser($function): bool
 
     $indexEUserDeprecated = $tokenizer->findToken('E_USER_DEPRECATED');
     if (! $indexEUserDeprecated) {
-        throw new Exception(
+        throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error but not E_USER_DEPRECATED',
                 $function
@@ -51,7 +51,7 @@ function isDeprecatedUser($function): bool
     }
 
     if ($indexEUserDeprecated < $indexTriggerError) {
-        throw new Exception(
+        throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED token but misplaced',
                 $function
@@ -76,7 +76,7 @@ function isDeprecatedUser($function): bool
             }
             $function = $class . '::' . $function[1];
         }
-        throw new Exception(
+        throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead',
                 $function
