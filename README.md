@@ -38,8 +38,8 @@ There are 2 functions:
 ```php
 /**
  * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"] or "ClassName::functionName"
- * @throws Exception when trigger_error found but the error is not E_USER_DEPRECATED
- * @throws Exception when trigger_error and E_USER_DEPRECATED found but misplaced
+ * @throws InvalidArgumentException when trigger_error found but the error is not E_USER_DEPRECATED
+ * @throws InvalidArgumentException when trigger_error and E_USER_DEPRECATED found but misplaced
  * @return bool
  */
 function isDeprecatedUser($function): bool
