@@ -2,10 +2,10 @@
 
 namespace IsDeprecatedSpec;
 
-use function IsDeprecated\isDeprecatedWithActualCall;
-use function IsDeprecated\isDeprecatedUser;
-use function IsDeprecated\isDeprecatedCore;
 use Exception;
+use function IsDeprecated\isDeprecatedCore;
+use function IsDeprecated\isDeprecatedUser;
+use function IsDeprecated\isDeprecatedWithActualCall;
 
 describe('IsDeprecated', function () {
 

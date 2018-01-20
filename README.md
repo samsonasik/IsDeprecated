@@ -71,6 +71,7 @@ function isDeprecatedCore(callable $function): bool
 include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecatedUser;
+use function IsDeprecated\isDeprecatedWithActualCall;
 
 function foo()
 {
@@ -114,6 +115,7 @@ if (isDeprecatedUser('foo')) {
 include 'vendor/autoload.php'; // autoload may already handled by your framework
 
 use function IsDeprecated\isDeprecatedUser;
+use function IsDeprecated\isDeprecatedWithActualCall;
 
 class Aclass
 {
