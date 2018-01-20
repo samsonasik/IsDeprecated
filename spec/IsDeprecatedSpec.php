@@ -27,7 +27,7 @@ describe('IsDeprecated', function () {
 
                 });
 
-              it('deprecated in some condition', function () {
+              it('deprecated in some condition with IF', function () {
 
                     $function = function () {
                         deprecated_in_some_condition();
@@ -36,6 +36,16 @@ describe('IsDeprecated', function () {
                     expect($actual)->toBe(true);
 
                });
+
+               it('deprecated in some condition with SWITCH', function () {
+
+                    $function = function () {
+                        deprecated_in_some_condition2();
+                    };
+                    $actual = isDeprecatedWithActualCall($function);
+                    expect($actual)->toBe(true);
+
+                });
 
             });
 
@@ -163,7 +173,17 @@ describe('IsDeprecated', function () {
                         $object = new \ClassWithIsDeprecatedCall();
                         $object->bar2();
                     };
-                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger has trigger_error and E_USER_DEPRECATED but has IF condition before, use isDeprecatedWithActualCall() method instead'));
+                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
+
+                });
+
+                it('deprecated with pass object of class at first index of array parameter with SWITCH check, throw Exception with suggest to use isDeprecatedWithActualCall', function () {
+
+                    $actual = function () {
+                        $object = new \ClassWithIsDeprecatedCall();
+                        $object->bar3();
+                    };
+                    expect($actual)->toThrow(new Exception('function ClassWithIsDeprecatedCall::deprecatedWithCheckBeforeTrigger2 has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead'));
 
                 });
 

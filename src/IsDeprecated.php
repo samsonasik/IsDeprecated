@@ -59,8 +59,16 @@ function isDeprecatedUser($function): bool
         );
     }
 
-    $indexTIF = $tokenizer->findToken('T_IF');
-    if ($indexTIF && $indexTriggerError > $indexTIF) {
+    $indexTIF       = $tokenizer->findToken('T_IF');
+    $indexTSWITCH   = $tokenizer->findToken('T_SWITCH');
+    $indexCondition = false;
+    if ($indexTIF) {
+        $indexCondition = $indexTIF;
+    }
+    if (!$indexTIF && $indexTSWITCH) {
+        $indexCondition = $indexTSWITCH;
+    }
+    if ($indexCondition && $indexTriggerError > $indexCondition) {
         if (is_array($function)) {
             $class = $function[0];
             if (is_object($function[0])) {
@@ -70,7 +78,7 @@ function isDeprecatedUser($function): bool
         }
         throw new Exception(
             sprintf(
-                'function %s has trigger_error and E_USER_DEPRECATED but has IF condition before, use isDeprecatedWithActualCall() method instead',
+                'function %s has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead',
                 $function
             )
         );

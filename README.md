@@ -201,7 +201,7 @@ if (isDeprecatedCore($function)) {
 Limitation
 ----------
 
-For Core PHP Functions or user function with condition (T_IF token), the function passed actually need to be called. It ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecatedCore()` returns true with call of `isDeprecatedWithActualCall`.
+For Core PHP Functions or user function with condition (T_IF or T_SWITCH token), the function passed actually need to be called. It ensure that we don't get error during call deprecated function, and we can use alternative function if the `isDeprecatedCore()` returns true with call of `isDeprecatedWithActualCall`.
 
 Contributing
 ------------

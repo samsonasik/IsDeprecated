@@ -14,6 +14,17 @@ function deprecated_in_some_condition()
     echo 'foo' . PHP_EOL;
 }
 
+function deprecated_in_some_condition2()
+{
+    $a = 1;
+    switch ($a) {
+        case 1:
+            trigger_error('this method has been deprecated.', E_USER_DEPRECATED);
+            break;
+    }
+    echo 'foo' . PHP_EOL;
+}
+
 function missPlacedDeprecated()
 {
     E_USER_DEPRECATED;
