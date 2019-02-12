@@ -19,11 +19,7 @@ function isDeprecatedWithActualCall(callable $function)
     $result = ErrorHandler::stop();
     ob_clean();
 
-    if ($result instanceof ErrorException) {
-        return true;
-    }
-
-    return false;
+    return $result instanceof ErrorException;
 }
 
 /**
