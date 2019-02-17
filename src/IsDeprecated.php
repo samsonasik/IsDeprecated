@@ -38,6 +38,10 @@ function isDeprecatedUser($function): bool
 
     $indexEUserDeprecated = $tokenizer->findToken('E_USER_DEPRECATED');
     if (! $indexEUserDeprecated) {
+        $function = ! \is_array($function)
+            ? $function
+            : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
+
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error but not E_USER_DEPRECATED',
@@ -47,6 +51,10 @@ function isDeprecatedUser($function): bool
     }
 
     if ($indexEUserDeprecated < $indexTriggerError) {
+        $function = ! \is_array($function)
+            ? $function
+            : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
+
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED token but misplaced',
