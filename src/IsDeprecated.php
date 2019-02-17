@@ -36,7 +36,7 @@ function isDeprecatedUser($function): bool
         return false;
     }
 
-    $implodeFunction = function($function) {
+    $implodeFunction = function ($function) {
         return ! \is_array($function)
             ? $function
             : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
