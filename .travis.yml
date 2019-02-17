@@ -18,7 +18,7 @@ before_script:
 script:
   - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then bin/phpstan analyse src/ --level=max; fi
   - bin/kahlan --coverage=4 --reporter=verbose --clover=build/logs/clover.xml
-  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then bin/coveralls -v --exclude-no-stmt; fi
+  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then bin/php-coveralls -v --exclude-no-stmt; fi
 
 notifications:
     email: false
