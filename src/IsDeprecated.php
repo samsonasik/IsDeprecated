@@ -8,6 +8,16 @@ use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
 /**
+ * Get function origin
+ */
+function implodeFunction($function)
+{
+    return ! \is_array($function)
+        ? $function
+        : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
+}
+
+/**
  * @param  callable $function callable function
  * @return bool
  */
@@ -38,27 +48,19 @@ function isDeprecatedUser($function): bool
 
     $indexEUserDeprecated = $tokenizer->findToken('E_USER_DEPRECATED');
     if (! $indexEUserDeprecated) {
-        $function = ! \is_array($function)
-            ? $function
-            : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
-
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error but not E_USER_DEPRECATED',
-                $function
+                implodeFunction($function)
             )
         );
     }
 
     if ($indexEUserDeprecated < $indexTriggerError) {
-        $function = ! \is_array($function)
-            ? $function
-            : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
-
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED token but misplaced',
-                $function
+                implodeFunction($function)
             )
         );
     }
@@ -73,17 +75,10 @@ function isDeprecatedUser($function): bool
         $indexCondition = $indexTSWITCH;
     }
     if ($indexCondition && $indexTriggerError > $indexCondition) {
-        if (is_array($function)) {
-            $class = $function[0];
-            if (is_object($function[0])) {
-                $class = get_class($function[0]);
-            }
-            $function = $class . '::' . $function[1];
-        }
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead',
-                $function
+                implodeFunction($function)
             )
         );
     }
