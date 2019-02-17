@@ -8,16 +8,6 @@ use FunctionParser\FunctionParser;
 use Zend\Stdlib\ErrorHandler;
 
 /**
- * Get function origin
- */
-function implodeFunction($function)
-{
-    return ! \is_array($function)
-        ? $function
-        : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
-}
-
-/**
  * @param  callable $function callable function
  * @return bool
  */
@@ -46,12 +36,18 @@ function isDeprecatedUser($function): bool
         return false;
     }
 
+    $implodeFunction = function($function) {
+        return ! \is_array($function)
+            ? $function
+            : (is_object($function[0]) ? get_class($function[0]) : $function[0]) . '::' . $function[1];
+    };
+
     $indexEUserDeprecated = $tokenizer->findToken('E_USER_DEPRECATED');
     if (! $indexEUserDeprecated) {
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error but not E_USER_DEPRECATED',
-                implodeFunction($function)
+                $implodeFunction($function)
             )
         );
     }
@@ -60,7 +56,7 @@ function isDeprecatedUser($function): bool
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED token but misplaced',
-                implodeFunction($function)
+                $implodeFunction($function)
             )
         );
     }
@@ -78,7 +74,7 @@ function isDeprecatedUser($function): bool
         throw new InvalidArgumentException(
             sprintf(
                 'function %s has trigger_error and E_USER_DEPRECATED but has condition check before, use isDeprecatedWithActualCall() method instead',
-                implodeFunction($function)
+                $implodeFunction($function)
             )
         );
     }
