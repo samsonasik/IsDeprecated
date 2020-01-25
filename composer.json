@@ -2,7 +2,11 @@
     "name": "samsonasik/is-deprecated",
     "type": "library",
     "description": "Check PHP user and core function is deprecated",
-    "keywords": ["php", "deprecated", "check"],
+    "keywords": [
+        "php",
+        "deprecated",
+        "check"
+    ],
     "homepage": "https://github.com/samsonasik/IsDeprecated",
     "license": "MIT",
     "authors": [
@@ -16,18 +20,18 @@
     "require": {
         "php": "^7.0",
         "jeremeamia/functionparser": "^1.0",
-        "zendframework/zend-stdlib": "^3.1"
-    },
-    "autoload": {
-        "files": [
-           "src/IsDeprecated.php"
-        ]
+        "laminas/laminas-stdlib": "^3.1"
     },
     "require-dev": {
-        "kahlan/kahlan": "^4.5",
+        "kahlan/kahlan": "^4.7.2",
         "php-coveralls/php-coveralls": "^2.0"
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "autoload": {
+        "files": [
+            "src/IsDeprecated.php"
+        ]
     }
 }

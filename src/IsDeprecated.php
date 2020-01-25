@@ -3,9 +3,9 @@
 namespace IsDeprecated;
 
 use ErrorException;
-use InvalidArgumentException;
 use FunctionParser\FunctionParser;
-use Zend\Stdlib\ErrorHandler;
+use InvalidArgumentException;
+use Laminas\Stdlib\ErrorHandler;
 
 /**
  * @param  callable $function callable function
