@@ -23,7 +23,7 @@ function isDeprecatedWithActualCall(callable $function)
 }
 
 /**
- * @param  string|array $function the "functionName" or ["ClassName" or object, "functionName"] or "ClassName::functionName"
+ * @param  string|array<object, string>|array<string, string> $function the "functionName" or ["ClassName" or object, "functionName"] or "ClassName::functionName"
  * @throws InvalidArgumentException when trigger_error found but the error is not E_USER_DEPRECATED
  * @throws InvalidArgumentException when trigger_error and E_USER_DEPRECATED found but misplaced
  * @return bool
